@@ -1,0 +1,161 @@
+Check the letter cross referances in Esther. (The ones to follow the
+story chronologically)
+
+Minion Pro?
+
+See https://en.wikipedia.org/wiki/Greek_ligatures for greek ligatures
+maybe used in the greek marginal notes. This may help explain why some
+of the greek doesn't look quite right.
+
+m-x set-input-method
+greek-babbel
+c-h c-\ (for cheat sheet)
+
+to input Greek:
+set-input-method greek-bable
+To see table: C-h I
+
+Oxia vs Tonos
+
+When checking Greek, sigma tau στ vs. stigma ϛ (ligature) 
+
+grep -o -E '[^ {},;:]+' chapter-01.tex
+
+rsync -ptv rsync://contextgarden.net/minimals/setup/first-setup.sh .
+sh ./first-setup.sh --modules=all --engine=luatex
+
+  . /home/rkrug/Context/tex/setuptex
+
+to install modules:
+unzip in ~/texmf
+
+See Psalme 22,23 for exception to verse/drop cap handling of psalmes. We
+need to handle this in a better manner. Check other psalmes.
+
+I am ignoring n/u and r/t typos. they look to much alike.
+
+Distinguish between Emph for emphasis and quotation.
+When a quotation is split up with such as '(saith he)' make a seperate
+UnEmph command?
+When multiple quote are strung together, split them into multiple Emph's?
+Speech, quote from Bible, quote from other works.
+
+Make sure quotes start with a capital letter, and are preceeded by a ':',
+e.g. He said: Let it be.
+
+What about use of initial capitals and chapters that
+begin with "VV"? See Genesis 22 for example.
+
+In John/argument, see use of:
+\footnote[j-arg-foot]{...}
+and
+\note[j-arg-foot]
+
+Fix LNotes. See Comments in files marked with !!!
+See extreme example in Matthew-25.
+In particular, both the text AND the verse numbers in the first
+argument need to be hard-coded. 
+This example also means that the marks in the text wil not always
+correspond one-to-one to a note, but rather several marks (in several
+verses) can correspond to one note.
+Also, unless the first argument ends in punctuation (such as "?"),
+a period should be added.
+
+What about \Var where the first part is empty?
+
+Make sure that the LNote at the very beginning of Matthew:7
+gets properly placed. If not, fix it. If so, consider moving
+MNotes. At least those at start of LNotes.
+
+Consider checking use of \emph where there is a \V or \XNote.
+Early on, I started and stopped the \emph multiple times, but
+that is probably not ideal. Let the various other formatting
+take care of which font is being used.
+
+expand various abbreviations --- õ and others
+Replace VV, vv with W, w; & with and,
+But &c with etc. Also, be careful of & in Latin!
+
+Check on how to keep correct spacing after italics.
+(Apparently done by \emph{...} already?)
+also \emph and punctuation.  \emph and numbers.
+
+Need to set cross-ref for 1. Tim. 6 ref to page in Preface, from
+p. 2282.
+
+in citations --- french spacing?  Regularize --- puctuation, use of
+italics?
+How do I handle periods at the end of a cite?  What about:
+(... \Cite{De vtilitate cred.\ cap.~7.}) where the period is inside
+parentheses?
+
+seperate uses of \emph into logical groups --- quotation, important,
+etc.??
+
+Figure out a proper scheme to categorize notes: short, long, margin,
+may be good enough, but some type of more thematic categorization
+would be good. Also, make sure whatever scheme is used is actually
+followed. Currently this is probably not true.
+
+There are several points where there are extended quotes marked in
+the margins with quotation marks. How should we handle this?
+
+
+See the MNote in verse 9 of Psalme 75. This note appears in the margin
+of both, whereas other SNotes appear in between the verses. I keep
+this marginal here (should I?)  becauſe the two surrounding regular
+SNotes are one piece of commentary, and this would interrupt
+that. Does this occur elsewhere? I think a couple of the current
+SNotes in the psalmes were in the margins. Check this.  But this isn't
+really an MNote in my current schema. How to handle it?
+But see the Marginal not for verse 15 in Psalme 71.
+
+Some of the Psalmes have 'regular' SNotes (marked with four dots in a
+square) as well as 'other' SNotes (marked by a letter). Do we care
+about this distinction?
+
+For MNotes about 'The first part. ...' of some book. Where should they go?
+At present I think they are all in the Summary. Check this?
+
+SNote in MNote Hebrewes chapter 07
+
+Possible double SNotes (either two in a row, or one marked twice).
+
+Will \Emph work in XRef?
+See:
+{ſeuen firſt Chapters of \Emph{Leuiticus}.}
+in the fourth age.
+
+Maybe re-introduce colons followed by capital letters?
+First kinda sentance: Second kinda sentance.
+I mostly made sentances end in periods for much of this.
+
+For names, check h vs. b, t vs. r, c vs. e, n vs. u, and such.
+Use newadvent.com's latin?
+
+For things like:
+\XRef{2.~Par.~15.}
+&.
+\XRef{17.}}
+should they be:
+\XRef{2.~Par.~15.}
+\XRef{&.~17.}}
+instead?
+
+
+NT: 760
+Psalmes: 250
+
+
+grep -ih '\\Cite' */*/*tex | grep -v '^\\Cite' | grep -v '^\\CNote' | sort
+grep -ih '\\XRef' */*/*tex | grep -v '^\\XRef' | grep -v '^\\CNote' | sort
+grep -f fix-xref-cites.txt -ir * | grep 'tex:'
+
+
+Old Testament preface is too long for header.
+              first age
+              second age
+but Genesis' short title gets used in chapters.
+
+first age title gets picked up for the rest of Genesis.
+second age

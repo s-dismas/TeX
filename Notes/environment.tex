@@ -1,0 +1,331 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% The (original) Douay Rheims Bible 
+%%%%
+%%%% Environment definition
+%%%%
+%%%% This setup is good enough for now, but certainly needs
+%%%% improvement.
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\startenvironment douay-rheims-env
+
+
+%%%
+%%% Modules
+%%%
+
+
+\usemodule[ancientgreek][font=Ibycus]
+
+
+%%%
+%%% Layout
+%%%
+
+
+\definepapersize[drb][width=189mm,  % 7.44 in
+                      height=246mm] % 9.69 in
+\setuppapersize[drb]
+
+%%% We always define a right-hand page. Thus, with doublesided
+%%% printing, right is outer, left is inner.
+%%% Across: 15 + 25 + 4 + 100 + 4 + 33 + 8
+%%% Down:   8  + 7  + 4 + 204 + 4 + 7  + 12
+\setuplayout[% gutter + leftmargindistance + leftmargin
+             % 15 + 25 + 4
+             backspace=44mm,
+             topspace=8mm,
+             width=100mm,
+             % header + headerdistance + textheight + footerdistance + footer
+             % 7 + 4 + 204 + 4 + 7
+             height=226mm,
+             header=7mm,
+             headerdistance=4mm,
+             footerdistance=4mm,
+             footer=7mm,
+             leftmargindistance=4mm,
+             leftmargin=25mm,
+             rightmargindistance=4mm,
+             rightmargin=33mm]
+
+\startmodeset
+    [screen]     {\setuppagenumbering[alternative=singlesided,
+                                      location={footer,right}]}
+    [paper]      {\setuppagenumbering[alternative=doublesided,
+                                      location={footer,right}]}
+    [default]    {\error}
+\stopmodeset
+
+%% Screen or Paper
+%% #1=screen, #2=paper
+\startmodeset
+    [screen]     {\def\SorP#1#2{#1}}
+    [paper]      {\def\SorP#1#2{#2}}
+    [default]    {\error}
+\stopmodeset
+
+\setupindenting[yes,1cm,next]
+
+\setupheadertexts[][Chapter][Book][]
+
+%%%
+%%% Heading and such
+%%%
+
+
+%% See http://wiki.contextgarden.net/Titles
+
+
+\setupinitial[% font=           % font
+              n=3,              % 3 lines high
+              % distance=       % distance between the drop capital
+                                % and rest of the text
+              % hoffset=        % ???
+              % voffset=        % ???
+              % before=\blank,  % ???
+              state=start]      % ???
+
+\definehead[Preface][chapter]
+
+\setuphead[Preface][
+  page=right,
+  header=empty,
+  number=no]
+
+%%% bokks of the new testament
+\definehead[Books][chapter]
+
+\setuphead[Books][
+  page=right,
+  header=empty,
+  number=no]
+
+%%% summe of the new testament
+\definehead[Summe][chapter]
+
+\setuphead[Summe][
+  page=right,
+  header=empty,
+  number=no]
+
+
+\definehead[Argument][section]
+
+\setuphead[Argument][
+  page=right,
+  header=empty,
+  number=no]
+
+
+\definehead[Book][chapter]
+
+\setuphead[Book][
+  page=right,
+  header=empty,
+  number=no]
+
+
+\definehead[Chapter][section]
+
+%%% !!! How do I get this after the footnotes?
+\startsetups Chapter:after
+      \ifcase\rawcountervalue[LLNote]\relax
+      \or
+          %%% I would like something like this:
+          %%% but I have to figure out how to get the Chapter number.
+          %%% \startsubject[title=\Sc{Annotations} Chap.\the\Chapter]
+          \startsubject[title=\Sc{Annotations}]
+              \placenotes[LLNote]
+          \stopsubject
+      \else
+          %%% I would like something like this:
+          %%% but I have to figure out how to get the Chapter number.
+          %%% \startsubject[title=\Sc{Annotations} Chap.\the\Chapter]
+          \startsubject[title=\Sc{Annotations}]
+              \placenotes[LLNote]
+          \stopsubject
+      \fi
+\stopsetups
+
+\setuphead[Chapter][
+  %%page=right,
+  number=no,
+  % reset verse numbers
+  after={\global\versenumber=1\par\bigskip},
+  aftersection=\setups{Chapter:after}]
+
+\def\ArgHeading#1{#1}
+
+%%% Make first letter of text a drop cap.
+\def\Summary#1{{\sl #1}\par\bigskip\placeinitial}
+
+\newcount\versenumber
+\versenumber=1
+%% verse marker
+%% !! Make sure proper font is used. Might appear in middle of
+%% \emph{...} for example.
+\def\V{\advance\versenumber 1%
+          {\leavevmode\rm\txx%
+              \raisebox{0.6ex}\hbox{\the\versenumber}~}}
+
+%%% For the Psalmes. (When there is a title, otherwise use \Summary)
+%%% Make first letter of text a drop cap.
+%%% !!! But how to handle the verse number?
+\def\PSummary#1{{\sl #1}\par\bigskip}
+\def\PTitle#1{{#1}\par\bigskip}
+%% New verse (number 2, with title as 1) at start of Psalme
+\def\VV{\advance\versenumber 1\placeinitial}
+%% Not a new verse at start of Psalme
+\def\NV{\placeinitial}
+
+
+%%%
+%%% Misc
+%%%
+
+
+%% make & a regular character of class "other"
+\catcode`\&=12
+
+
+%%%
+%%% Notes
+%%% !!! Make sure all notes are done in proper font. Might appear in
+%%% middle of \emph{...} for example.
+%%%
+
+
+%% short notes --- in main text
+\definenote[SNote]
+%% long notes --- in main text
+%% But use LNote, defined below
+\definenote[LLNote]
+%% notes in long notes
+\definenote[ONote]
+
+\def\mySNotecommand#1{{\rm\txx\raisebox{0.7ex}\hbox{#1)}}}
+
+\setupnote[SNote][anchor=next,
+                  textcommand=\mySNotecommand]
+
+\setupnotation[SNote][way=bypage,
+                      numberconversion=characters]
+
+\def\myLNotecommand#1{{\rm\txx\raisebox{1.0ex}\hbox{♪}}}
+
+\setupnote[LLNote][location=text,
+                   anchor=next,
+                   textcommand=\myLNotecommand]
+
+\setupnotation[LLNote][way=bychapter,
+                       number=no,
+                       %%indenting={yes,medium}]
+                       %%numbercommand=\hskip1cm]
+                       ]
+
+\def\LNote#1#2{\edef\imconfused{\noexpand\LLNote{\hskip1cm\the\versenumber\ #1) #2}}\imconfused}
+
+%%% Placing a font switch at the begin of a paragraph can sometimes
+%%% generate unexpected side-effects. This can be avoided by forcing
+%%% horizontal mode before any font change. Hence \dontleavehmode.
+%%% Bit this use of bold is interfering with smallcaps.
+%%% \def\MNote#1{\margintext[scope=local]{\dontleavehmode\bold{#1}}}
+\def\MNote#1{\margintext[scope=local,
+                         location=outer,
+                         align=inner,
+                         stack=continue,   % "floats" the texts
+                         style=small]{#1}}
+
+%%% Textual note
+\def\TNote#1{\margintext[scope=local,
+                         location=inner,
+                         align=outer,
+                         stack=continue,   % "floats" the texts
+                         style=small]{#1}}
+
+%%% Citation note
+\def\CNote#1{\margintext[scope=local,
+                         location=inner,
+                         align=outer,
+                         stack=continue,   % "floats" the texts
+                         style=small]{#1}}
+
+%% !!! but what about where one or the other variant is empty?
+%% !!! See Luke 16:21 for an example.
+%% variant reading
+%% #1=in text, #2=variant reading
+\def\Var#1#2{‘#1’\margintext[scope=local,
+                             location=inner,
+                             align=outer,
+                             stack=continue,   % "floats" the texts
+                             style=small]{#2}}
+
+
+%%%
+%%% Macros
+%%%
+
+%% For Psalme 118 <hebrew letter><explication>
+\def\LetterNote#1#2{hfil #1 hfil #2 hfil}
+
+%% Large
+\def\Large#1{{\tfc #1}}
+
+%% emphasis
+\def\Emph#1{{\sl #1}}
+
+%% bold
+\def\Bf#1{{\bf #1}}
+
+%% greek
+\def\G#1{\localgreek{#1}}
+%% transliterated greek
+%% !!! Untransliterate?
+\def\GG#1{{\sl #1}}
+
+%% latin
+%% !!! But what about when Latin appears inside \Emph ?
+\def\L#1{{\sl #1}}
+
+%% hebrew, in Hebrew
+%%% But I'm not getting the points placed correctly.
+\definefontfeature[hebrew][default][script=hebr,mark=yes,ccmp=yes]
+\definefont[hebrew][name:ezrasil]
+\def\H#1{\hebrew #1}
+%% hebrew, but in roman letters
+\def\HH#1{{\sl #1}}
+
+%% small caps
+\def\Sc#1{{\sc#1}}
+
+%% citation --- outside DR
+\def\Cite#1{{\it #1}}
+
+%% citation --- cross reference
+\def\XRef#1{{\it #1}}
+
+%% correction
+%% #1=original, #2=corrected, #3=reasoning
+\def\Fix#1#2#3{#2}
+
+%%%
+%%% Spaces
+%%%
+
+
+%% ~ --- non-breaking space (non-sentance ending also?)
+%% \<space> --- non-sentance ending space?
+%% \@ --- sentance ending space?
+
+\def\@{\spacefactor1000}
+
+%%% long s, ſ.
+\directlua{tex.setcatcode ('global', 383, 11)}
+\directlua{tex.setlccode ('global', 383, 115)}
+
+\stopenvironment
