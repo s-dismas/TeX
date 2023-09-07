@@ -1,6 +1,0 @@
-find . -iname "*~*~"       -exec rm {} \;
-find . -iname "*.log"      -exec rm {} \;
-find . -iname "*-[12].tex" -exec rm {} \;
-find . -iname "*.pdf"      -exec rm {} \;
-find . -iname "*.tuc"      -exec rm {} \;
-find . -iname "temp"       -exec rm {} \;

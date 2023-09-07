@@ -1,2 +1,0 @@
-#!/usr/local/bin/bash
-grep -o -E '[^-!| ".?,;:&~(){}%0-9]+' $1 | sort | uniq | sort
