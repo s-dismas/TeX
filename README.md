@@ -5,7 +5,7 @@ edition of the (original, circa 1600) Douay-Rheims Bible.
 The Projects homepage is at:
 http://saint-dismas.com
 
-Pdf's by chapter are available at:
+Pdf's by Book are available at:
 https://github.com/s-dismas/Pdf
 
 You can purchase printed volumes at:
