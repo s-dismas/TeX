@@ -3,7 +3,7 @@ These are the TeX files for my project to create a newly typeset
 edition of the (original, circa 1600) Douay-Rheims Bible.
 
 The Projects homepage is at:
-http:saint-dismas.com
+http://saint-dismas.com
 
 Pdf's by chapter are available at:
 https://github.com/s-dismas/Pdf
