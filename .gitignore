@@ -3,5 +3,8 @@
 *-[12].tex
 *.pdf
 *.tuc
+*.png
+*.jpeg
+*.bak
 temp
 Notes/
